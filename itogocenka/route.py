@@ -8,6 +8,7 @@ from aiogram.types import (
     InlineKeyboardButton,
     CallbackQuery
 )
+from sessiondays import get_session_status
 from states import StatesBot
 from aiogram.fsm.context import FSMContext
 
@@ -15,15 +16,6 @@ router = Router()
 
 from keyboard import get_main_reply_keyboard, main_menu
 
-def get_main_reply_keyboard():
-    keyboard = ReplyKeyboardMarkup(
-        keyboard=[
-            [KeyboardButton(text="Старт")],
-            [KeyboardButton(text="О боте"), KeyboardButton(text="Помощь")]
-        ],
-        resize_keyboard=True
-    )
-    return keyboard
 
 def main_menu():
     keyboard = InlineKeyboardMarkup(
@@ -33,11 +25,6 @@ def main_menu():
         ]
     )
     return keyboard
-
-"""@router.callback_query(lambda c: c.data=="info more")
-async def process_more_info(callback: CallbackQuery):
-    await callback.message.answer("Вот более подробная инфа")
-    await callback.answer()"""
 
 @router.message(Command("start"))
 async def start(message: Message, state: FSMContext):
@@ -61,12 +48,20 @@ async def help(message: Message):
 
 @router.message(F.text.lower() == 'о боте', StateFilter("*"))
 async def about(message: Message):
-    await message.answer("Это проект группы студетов из 26-КНТ4 по ТП в 1 модуле.")
+    await message.answer("Это проект группы студетов из 26КНТ-4 по Технологиям Программирования в 1 модуле.")
 
+   
+# Не забудьте импортировать get_potoks_keyboard из файла с клавиатурами в самом верху route.py
+from keyboard import get_potoks_keyboard 
 @router.callback_query(F.data == "menu_days")
-async def f_menu_days(callback):
-    await callback.message.answer("До сессионной недели х дней.")
+async def f_menu_days(callback: CallbackQuery):
+    # Эта функция берёт текст из sessiondays.py и кладёт его в переменную
+    text_response = get_session_status()
+    
+    # Бот отправляет пользователю этот готовый текст
+    await callback.message.answer(text_response)
     await callback.answer()
+
 
 @router.callback_query(F.data == "menu_mark")
 async def f_menu_mark(callback):
