@@ -11,8 +11,8 @@ SESSIONS = {
         "end": datetime(2026, 10, 31).date(),
     },
     "зимняя сессия": {
-        "start": datetime(2026, 1, 21).date(),
-        "end": datetime(2026, 1, 30).date(),
+        "start": datetime(2026, 12, 21).date(),
+        "end": datetime(2026, 12, 30).date(),
     },
     "весенняя модульная сессия": {
         "start": datetime(2027, 3, 25).date(),
