@@ -82,6 +82,18 @@ FORMULAS = {
                 {"name": "Экзамен", "type": "grade", "input_prompt": "Введи оценку за экзамен"}
             ],
             "formula": "0.1*Тест1 + 0.1*Тест2 + 0.1*Тест3 + 0.1*Тест4 + 0.6*Экзамен"
+        },
+        "Цифровая грамотность": {
+            "components": [
+                {"name": "Доклад", "type": "list", "input_prompt": "Введи оценку за доклад"},
+                {"name": "первый прогон экзамена", "type": "list", "input_prompt": "Введи оценку за первый прогон экзамена"},
+                {"name": "второй прогон экзамена", "type": "list", "input_prompt": "Введи оценку за второй прогон экзамена"},
+                {"name": "Word", "type": "grade", "input_prompt": "Введи оценку за дз по Word"},
+                {"name": "Excel", "type": "grade", "input_prompt": "Введи оценку за дз по Excel"},
+                {"name": "PowerPoint ", "type": "grade", "input_prompt": "Введи оценку за дз по PowerPoint"},
+                {"name": "Посещаемость", "type": "grade", "input_prompt": "Введи количество посещений"}
+            ],
+            "formula": "0.1*Доклад + 0.1*первый прогон экзамена + 0.1*второй прогон экзамена + 0.2*Word + 0.2*Excel + 0.2*PowerPoint + 0.1*Посещаемость"
         }
     },
     "2": {
@@ -173,6 +185,18 @@ FORMULAS = {
                 {"name": "Экзамен", "type": "grade", "input_prompt": "Введи оценку за экзамен"}
             ],
             "formula": "0.1*Тест1 + 0.1*Тест2 + 0.1*Тест3 + 0.1*Тест4 + 0.6*Экзамен"
+        },
+        "Цифровая грамотность": {
+            "components": [
+                {"name": "Доклад", "type": "list", "input_prompt": "Введи оценку за доклад"},
+                {"name": "первый прогон экзамена", "type": "list", "input_prompt": "Введи оценку за первый прогон экзамена"},
+                {"name": "второй прогон экзамена", "type": "list", "input_prompt": "Введи оценку за второй прогон экзамена"},
+                {"name": "Word", "type": "grade", "input_prompt": "Введи оценку за дз по Word"},
+                {"name": "Excel", "type": "grade", "input_prompt": "Введи оценку за дз по Excel"},
+                {"name": "PowerPoint ", "type": "grade", "input_prompt": "Введи оценку за дз по PowerPoint"},
+                {"name": "Посещаемость", "type": "grade", "input_prompt": "Введи количество посещений"}
+            ],
+            "formula": "0.1*Доклад + 0.1*первый прогон экзамена + 0.1*второй прогон экзамена + 0.2*Word + 0.2*Excel + 0.2*PowerPoint + 0.1*Посещаемость"
         }
     },
     "3": {
@@ -246,6 +270,18 @@ FORMULAS = {
                 ],
                 "formula": "0.25*Семинары3 + 0.25*Семинары4 + 0.15*LMS + 0.2*Проект + 0.15*Экзамен"
             }
+        },
+        "Цифровая грамотность": {
+            "components": [
+                {"name": "Доклад", "type": "list", "input_prompt": "Введи оценку за доклад"},
+                {"name": "первый прогон экзамена", "type": "list", "input_prompt": "Введи оценку за первый прогон экзамена"},
+                {"name": "второй прогон экзамена", "type": "list", "input_prompt": "Введи оценку за второй прогон экзамена"},
+                {"name": "Word", "type": "grade", "input_prompt": "Введи оценку за дз по Word"},
+                {"name": "Excel", "type": "grade", "input_prompt": "Введи оценку за дз по Excel"},
+                {"name": "PowerPoint ", "type": "grade", "input_prompt": "Введи оценку за дз по PowerPoint"},
+                {"name": "Посещаемость", "type": "grade", "input_prompt": "Введи количество посещений"}
+            ],
+            "formula": "0.1*Доклад + 0.1*первый прогон экзамена + 0.1*второй прогон экзамена + 0.2*Word + 0.2*Excel + 0.2*PowerPoint + 0.1*Посещаемость"
         },
         "БЖД": {
             "components": [
