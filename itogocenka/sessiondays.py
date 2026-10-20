@@ -24,36 +24,27 @@ SESSIONS = {
     }
 }
 
-# Дата автоматической смены формул оценки
 SEMESTER_2_START = datetime(2027, 1, 1).date()
 
 def get_current_semester() -> int:
-    """Автоматически определяет текущий семестр на основе даты"""
     today = datetime.now().date()
     if today >= SEMESTER_2_START:
         return 2
     return 1
 
 def get_session_status() -> str:
-    """
-    Проверяет статус сессий: пишет, если сессия идет сейчас,
-    или считает дни до начала ближайшей будущей сессии.
-    """
     today = datetime.now().date()
     
-    # 1. Сначала проверяем, идет ли какая-то сессия прямо сейчас
     for name, dates in SESSIONS.items():
         if dates["start"] <= today <= dates["end"]:
             days_left = (dates["end"] - today).days
             return f"Сейчас идёт {name}!**\nДо её окончания осталось дней: {days_left}."
 
-    # 2. Если ни одна сессия не идет, ищем самую ближайшую будущую
     upcoming_sessions = []
     for name, dates in SESSIONS.items():
         if dates["start"] > today:
             upcoming_sessions.append((name, dates["start"]))
-            
-    # Сортируем будущие сессии по дате начала, чтобы найти самую первую
+
     if upcoming_sessions:
         upcoming_sessions.sort(key=lambda x: x[1])
         next_session_name, next_session_start = upcoming_sessions[0]
@@ -63,6 +54,4 @@ def get_session_status() -> str:
         if days_delta == 1:
             return f"Остался один день до сессии. Удачи на экзаменах!"
     
-    
-    # Если все сессии из словаря на этот учебный год уже завершились
     return "🎉 Все сессии в этом учебном году успешно завершены!"

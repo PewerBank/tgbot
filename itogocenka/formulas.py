@@ -82,8 +82,21 @@ FORMULAS = {
                 {"name": "Экзамен", "type": "grade", "input_prompt": "Введи оценку за экзамен"}
             ],
             "formula": "0.1*Тест1 + 0.1*Тест2 + 0.1*Тест3 + 0.1*Тест4 + 0.6*Экзамен"
+        },
+        "Цифровая грамотность": {
+            "components": [
+                {"name": "Доклад", "type": "list", "input_prompt": "Введи оценку за доклад"},
+                {"name": "Прогон1", "type": "list", "input_prompt": "Введи оценку за первый прогон экзамена"},
+                {"name": "Прогон2", "type": "list", "input_prompt": "Введи оценку за второй прогон экзамена"},
+                {"name": "Word", "type": "grade", "input_prompt": "Введи оценку за дз по Word"},
+                {"name": "Excel", "type": "grade", "input_prompt": "Введи оценку за дз по Excel"},
+                {"name": "PowerPoint", "type": "grade", "input_prompt": "Введи оценку за дз по PowerPoint"},
+                {"name": "Посещаемость", "type": "grade", "input_prompt": "Введи количество посещений"}
+            ],
+            "formula": "0.1*Доклад + 0.1*Прогон1 + 0.1*Прогон2 + 0.2*Word + 0.2*Excel + 0.2*PowerPoint + 0.1*Посещаемость"
         }
     },
+
     "2": {
         "Математический анализ": {
             "components": [
@@ -173,6 +186,18 @@ FORMULAS = {
                 {"name": "Экзамен", "type": "grade", "input_prompt": "Введи оценку за экзамен"}
             ],
             "formula": "0.1*Тест1 + 0.1*Тест2 + 0.1*Тест3 + 0.1*Тест4 + 0.6*Экзамен"
+        },
+        "Цифровая грамотность": {
+            "components": [
+                {"name": "Доклад", "type": "list", "input_prompt": "Введи оценку за доклад"},
+                {"name": "Прогон1", "type": "list", "input_prompt": "Введи оценку за первый прогон экзамена"},
+                {"name": "Прогон2", "type": "list", "input_prompt": "Введи оценку за второй прогон экзамена"},
+                {"name": "Word", "type": "grade", "input_prompt": "Введи оценку за дз по Word"},
+                {"name": "Excel", "type": "grade", "input_prompt": "Введи оценку за дз по Excel"},
+                {"name": "PowerPoint", "type": "grade", "input_prompt": "Введи оценку за дз по PowerPoint"},
+                {"name": "Посещаемость", "type": "grade", "input_prompt": "Введи количество посещений"}
+            ],
+            "formula": "0.1*Доклад + 0.1*Прогон1 + 0.1*Прогон2 + 0.2*Word + 0.2*Excel + 0.2*PowerPoint + 0.1*Посещаемость"
         }
     },
     "3": {
@@ -190,7 +215,7 @@ FORMULAS = {
                 {"name": "КР", "type": "grade", "input_prompt": "Введи оценку за контрольную работу"},
                 {"name": "Экзамен", "type": "grade", "input_prompt": "Введи оценку за экзамен"}
             ],
-            "formula": "(0.2*Накоп + 0.3*КР)*0.5 + 0.5*Экзамен"
+            "formula": "0.2*Накоп + 0.3*КР + 0.5*Экзамен"
         },
         "Дискретная математика": {
             "components": [
@@ -256,6 +281,18 @@ FORMULAS = {
                 {"name": "Экзамен", "type": "grade", "input_prompt": "Введи оценку за экзамен"}
             ],
             "formula": "0.1*Тест1 + 0.1*Тест2 + 0.1*Тест3 + 0.1*Тест4 + 0.6*Экзамен"
+        },
+        "Цифровая грамотность": {
+            "components": [
+                {"name": "Доклад", "type": "list", "input_prompt": "Введи оценку за доклад"},
+                {"name": "Прогон1", "type": "list", "input_prompt": "Введи оценку за первый прогон экзамена"},
+                {"name": "Прогон2", "type": "list", "input_prompt": "Введи оценку за второй прогон экзамена"},
+                {"name": "Word", "type": "grade", "input_prompt": "Введи оценку за дз по Word"},
+                {"name": "Excel", "type": "grade", "input_prompt": "Введи оценку за дз по Excel"},
+                {"name": "PowerPoint", "type": "grade", "input_prompt": "Введи оценку за дз по PowerPoint"},
+                {"name": "Посещаемость", "type": "grade", "input_prompt": "Введи количество посещений"}
+            ],
+            "formula": "0.1*Доклад + 0.1*Прогон1 + 0.1*Прогон2 + 0.2*Word + 0.2*Excel + 0.2*PowerPoint + 0.1*Посещаемость"
         }
     }
 }
@@ -263,9 +300,7 @@ FORMULAS = {
 def calculate_subject_score(formula_str: str, grades: dict) -> float:
 
     try:
-        # Безопасно подставляем значения оценок вместо их названий в формуле
         eval_loc = {key: float(val) for key, val in grades.items()}
-        # Вычисляем математическую строку
         result = eval(formula_str, {"__builtins__": None}, eval_loc)
         return round(float(result), 2)
     except Exception:
@@ -287,11 +322,8 @@ def get_formula(stream_id, subj):
     
     if not subj_data:
         return {}
-
-    # Если предмет разделен на семестры
     if "semester_1" in subj_data:
         current_month = datetime.now().month
-        # 2-й семестр обычно длится с февраля (2) по август (8)
         if 1 <= current_month <= 6:
             return subj_data["semester_2"]
         return subj_data["semester_1"]

@@ -2,19 +2,15 @@ from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.context import FSMContext
 from aiogram.filters import Command, StateFilter
-
-# Импортируем наши функции и клавиатуры
 from keyboard import get_main_reply_keyboard, main_menu, menu_streams, subj_menu, parts_menu
 from formulas import get_subject, get_formula, calculate_subject_score
 from sessiondays import get_session_status
-from states import StatesBot # Убедитесь, что у вас есть StatesBot.choose_subject, view_subject, wait_for_input
-
+from states import StatesBot 
 import json
 import os
 
 DB_FILE = "users.json"
 
-# Вспомогательные функции базы данных (встроенные прямо сюда для надежности)
 def get_user_stream(user_id: int) -> str:
     if not os.path.exists(DB_FILE): return None
     with open(DB_FILE, "r", encoding="utf-8") as f:
@@ -67,12 +63,10 @@ async def f_menu_mark(callback: CallbackQuery, state: FSMContext):
     saved_stream = get_user_stream(callback.from_user.id)
     
     if saved_stream:
-        # Если поток сохранен, сразу пишем ID потока в FSM и ведем к предметам
         await state.update_data(stream_id=saved_stream)
         await state.set_state(StatesBot.choose_subject)
         await callback.message.edit_text(f"📚 Ваш поток: {saved_stream}. Выберите предмет:", reply_markup=subj_menu(saved_stream))
     else:
-        # Иначе — выбираем поток
         await callback.message.edit_text("🎓 Выберите ваш поток:", reply_markup=menu_streams())
     await callback.answer()
 
@@ -86,7 +80,6 @@ async def f_select_stream(callback: CallbackQuery, state: FSMContext):
     await callback.message.edit_text(f"📚 Поток успешно сохранен! Выберите предмет:", reply_markup=subj_menu(stream_id))
     await callback.answer()
 
-# 3. Сброс потока (Reset)
 @router.callback_query(F.data == "reset_stream", StateFilter("*"))
 async def f_reset_stream(callback: CallbackQuery, state: FSMContext):
     await state.clear()
@@ -99,7 +92,6 @@ async def f_menu_days(callback: CallbackQuery):
     text_response = get_session_status()
     user_id = callback.from_user.id
     
-    # Кнопки управления подпиской
     from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
     kb = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="🔔 Включить напоминания каждый день", callback_data="enable_notify")],
@@ -109,10 +101,8 @@ async def f_menu_days(callback: CallbackQuery):
     await callback.message.answer(text_response, reply_markup=kb)
     await callback.answer()
 
-# Хэндлеры для этих кнопок
 @router.callback_query(F.data == "enable_notify")
 async def f_enable_notify(callback: CallbackQuery):
-    # вызываем функцию из db.py и ставим True
     await callback.message.answer("🔔 Вы подписались на ежедневный отсчет до сессии! Бот будет писать вам в 10:00.")
     await callback.answer()
 
@@ -140,7 +130,7 @@ async def f_stream_chosen(callback: CallbackQuery, state: FSMContext):
     await state.set_state(StatesBot.choose_subject)
     await callback.answer()
 
-# 4. Выбор конкретного предмета (subj_Название)
+
 @router.callback_query(F.data.startswith("subj_"), StateFilter("*"))
 async def f_subj_chosen(callback: CallbackQuery, state: FSMContext):
     konkretnoe_name = callback.data.replace("subj_", "")
@@ -165,7 +155,6 @@ async def f_subj_chosen(callback: CallbackQuery, state: FSMContext):
     await callback.answer()
 
 
-# 5. Сама функция карточки предмета
 async def subj_card(message: Message, state: FSMContext):
     data = await state.get_data()
     subj = data["subject"]
@@ -245,7 +234,6 @@ async def f_grade(message:Message, state: FSMContext):
 
     await subj_card(message, state)
 
-# 6. Кнопка "Посчитать итоговую оценку"
 @router.callback_query(F.data == "calculate_final_score", StateFilter("*"))
 async def process_final_calculation(callback: CallbackQuery, state: FSMContext):
     data = await state.get_data()
@@ -255,15 +243,18 @@ async def process_final_calculation(callback: CallbackQuery, state: FSMContext):
     
     final_grade = calculate_subject_score(formula, grades)
     
-    # Формируем текстовую рекомендацию в зависимости от балла
     if final_grade >= 7.5:
-        rec = "🎉 Отличный результат! Вы идете на Отлично (8-10 баллов). Если хочешь получить 9-10 можешь взять у преподавателя дополнительное задание"
+        rec = "🎉 Отличный результат! Вы идете на Отлично (8-10 баллов)."
     elif final_grade >= 5.5:
         rec = "👍 Хороший средний балл (6-7 баллов). Можно поднажать до отличной!"
     elif final_grade >= 3.5:
-        rec = "⚠️ Вы близко к порогу (4-5 баллов). Будьте аккуратнее на экзаменах."
+        rec = "⚠️ Вы близки к порогу (4-5 баллов). Будьте аккуратнее на экзаменах."
     else:
         rec = "🚨 Прогноз неудовлетворительный (меньше 4). Срочно закрывайте долги!"
+
+    subj_lower = subj.lower()
+    if final_grade >= 8.0 and ("орг" in subj_lower or "истори" in subj_lower):
+        rec = "🎉 Отличный результат! Если хочешь получить 9-10 баллов, тебе стоит обратиться к преподавателю и попросить дополнительное задание."
 
     response_text = (
         f"📊 **Итоговый расчет по предмету {subj}**\n"
@@ -274,44 +265,33 @@ async def process_final_calculation(callback: CallbackQuery, state: FSMContext):
     
     await callback.message.answer(response_text, parse_mode="Markdown")
     await callback.answer()
-    await state.clear() # Полностью очищаем состояние FSM после успешного расчета
+    await state.clear()
 
-# 1. Шаг: Пользователь нажал на любой компонент оценки (на КР1, на Экзамен, на ДЗ и т.д.)
+
 @router.callback_query(F.data.startswith("fill_"), StateFilter("*"))
 async def f_fill_component(callback: CallbackQuery, state: FSMContext):
-    # Вытаскиваем имя компонента, отрезая префикс "fill_" (получим например "КР1")
     component_name = callback.data.replace("fill_", "")
-    
-    # Запоминаем в FSM, какую именно оценку мы сейчас ждем
+
     await state.update_data(current_component=component_name)
-    
-    # Переключаем состояние на ожидание текста от пользователя
     await state.set_state(StatesBot.wait_for_input)
     
     await callback.message.answer(f"📥 Введи {component_name}:")
     await callback.answer()
 
-# 2. Шаг: Пользователь пишет число в чат
+
 @router.message(StatesBot.wait_for_input)
 async def f_save_component_grade(message: Message, state: FSMContext):
-    # Проверяем, что введено именно число
     try:
-        grade_val = float(message.text.replace(",", ".")) # на случай если ввели через запятую "7,5"
+        grade_val = float(message.text.replace(",", "."))
     except ValueError:
         await message.answer("❌ Ошибка! Введите оценку числом (например: `8` или `7.5`). Попробуйте еще раз:")
         return
 
-    # Достаем из памяти сохраненные ранее данные по предмету
     data = await state.get_data()
     grades = data.get("grades", {})
     component_name = data.get("current_component")
 
-    # Записываем новую оценку в наш словарь оценок
     grades[component_name] = grade_val
     await state.update_data(grades=grades)
-
-    # Возвращаем пользователя в состояние просмотра карточки
     await state.set_state(StatesBot.view_subject)
-    
-    # Вызываем функцию subj_card, чтобы она перерисовала меню (поставила галочку)
     await subj_card(message, state)
