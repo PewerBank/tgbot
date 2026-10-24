@@ -103,7 +103,7 @@ async def f_menu_days(callback: CallbackQuery):
 
 @router.callback_query(F.data == "enable_notify")
 async def f_enable_notify(callback: CallbackQuery):
-    await callback.message.answer("🔔 Вы подписались на ежедневный отсчет до сессии! Бот будет писать вам в 10:00.")
+    await callback.message.answer("🔔 Вы подписались на ежедневный отсчет до сессии! Бот будет писать вам в 9:25.")
     await callback.answer()
 
 @router.callback_query(F.data == "disable_notify")
@@ -183,56 +183,76 @@ async def subj_card(message: Message, state: FSMContext):
 
 @router.callback_query(F.data.startswith("fill_"), StatesBot.view_subject)
 async def f_fill(callback: CallbackQuery, state: FSMContext):
-    name = callback.data.split("_",1)[1]
+    # Используем безопасное удаление префикса
+    name = callback.data.replace("fill_", "") 
     await state.update_data(filling=name)
-    await callback.message.answer(f'Введи {name}.\n📌Если вводишь накопленную оценку, то вводи все полученные оценки через пробел.\n'
-                                  f'✍🏻Пример ввода: 7 8 9')
+    
+    await callback.message.answer(
+        f"Введи {name}.\n"
+        f"📝 Если вводишь накопленную оценку, то вводи все полученные оценки через пробел.\n"
+        f"🎯 Пример ввода: 7 8 9"
+    )
     await state.set_state(StatesBot.enter_grade)
     await callback.answer()
 
+
 @router.message(StatesBot.enter_grade)
-async def f_grade(message:Message, state: FSMContext):
+async def f_grade(message: Message, state: FSMContext):
     data = await state.get_data()
     filling = data["filling"]
-    parts = data["components"]
-    comp= None
-    for c in parts:
+    components = data["components"]
+    
+    comp = None
+    for c in components:
         if c["name"] == filling:
             comp = c
             break
+            
+    if not comp:
+        await message.answer("❌ Компонент не найден. Вернитесь к выбору предмета.")
+        await state.set_state(StatesBot.view_subject)
+        return
+
     text = message.text.strip()
     value = 0.0
-    if comp["type"]== "grade":
+    if comp["type"] == "grade":
         try:
             value = float(text.replace(",", "."))
         except ValueError:
             await message.answer("⚠️ Введи число от 0 до 10")
             return
+            
         if not (0 <= value <= 10):
             await message.answer("⚠️ Оценка должна быть от 0 до 10")
             return
 
     elif comp["type"] == "list":
-        parts = text.replace(",", " ").split()
-        if not parts:
+        input_grades = text.replace(",", " ").split()
+        if not input_grades:
             await message.answer("⚠️ Введи хотя бы одну оценку")
             return
+            
         try:
-            numbers = [float(p) for p in parts]
+            numbers = [float(p) for p in input_grades]
         except ValueError:
-            await message.answer('⚠️ Введи числа через пробел. Например: 7 8 9')
+            await message.answer("⚠️ Введи числа через пробел. Например: 7 8 9")
             return
+            
         for n in numbers:
             if not (0 <= n <= 10):
-                await message.answer("⚠️ Все оценки от 0 до 10")
+                await message.answer("⚠️ Все оценки должны быть от 0 до 10")
                 return
-        value = sum(numbers)/ len(numbers)
-        await message.answer(f"▶{filling} = {value}")
-    grades = data["grades"]
+        value = sum(numbers) / len(numbers)
+
+    await message.answer(f"✅ {filling} = {value:.2f}")
+    
+    grades = data.get("grades", {})
     grades[filling] = value
     await state.update_data(grades=grades)
-
+    
+    await state.set_state(StatesBot.view_subject)
     await subj_card(message, state)
+
 
 @router.callback_query(F.data == "calculate_final_score", StateFilter("*"))
 async def process_final_calculation(callback: CallbackQuery, state: FSMContext):

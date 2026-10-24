@@ -4,8 +4,8 @@ FORMULAS = {
     "1": {
         "Математический анализ": {
             "components": [
-                {"name": "КР1", "type": "list", "input_prompt": "Введи оценку за контрольную работу №1"},
-                {"name": "КР2", "type": "list", "input_prompt": "Введи оценку за контрольную работу №2"},
+                {"name": "КР1", "type": "grade", "input_prompt": "Введи оценку за контрольную работу №1"},
+                {"name": "КР2", "type": "grade", "input_prompt": "Введи оценку за контрольную работу №2"},
                 {"name": "Экзамен", "type": "grade", "input_prompt": "Введи оценку за экзамен"}
             ],
             "formula": "0.3*КР1 + 0.3*КР2 + 0.4*Экзамен"
@@ -20,18 +20,18 @@ FORMULAS = {
         },
         "Дискретная математика": {
             "components": [
-                {"name": "КР1", "type": "list", "input_prompt": "Введи оценку за контрольную работу №1"},
+                {"name": "КР1", "type": "grade", "input_prompt": "Введи оценку за контрольную работу №1"},
                 {"name": "Экзамен", "type": "grade", "input_prompt": "Введи оценку за экзамен"}
             ],
             "formula": "1/3*КР1 + 2/3*Экзамен"
         },
         "Технологии программирования": {
             "components": [
-                {"name": "Интересность", "type": "list", "input_prompt": "Введи оценку за интересность проекта"},
-                {"name": "Реализация", "type": "list", "input_prompt": "Введи оценку за реализацию проекта"},
+                {"name": "Интересность", "type": "grade", "input_prompt": "Введи оценку за интересность проекта"},
+                {"name": "Реализация", "type": "grade", "input_prompt": "Введи оценку за реализацию проекта"},
                 {"name": "ДЗ", "type": "list", "input_prompt": "Введи оценку за домашнее задание"},
                 {"name": "Тест", "type": "grade", "input_prompt": "Введи оценку за тестовый экзамен"},
-                {"name": "Посещаемость", "type": "grade", "input_prompt": "Введи количество посещений"},
+                {"name": "Посещаемость", "type": "list", "input_prompt": "Введи количество посещений"},
                 {"name": "Бонусы", "type": "grade", "input_prompt": "Введи бонусы, если их нет, ставь '0'"}
             ],
             "formula": "0.2*Интересность + 0.2*Реализация + 0.2*ДЗ + 0.2*Тест + 0.1*Посещаемость + 0.1*Бонусы"
@@ -47,7 +47,7 @@ FORMULAS = {
             "components": [
                 {"name": "Семинары", "type": "list", "input_prompt": "Введи все оценки за семинары"},
                 {"name": "Проект", "type": "grade", "input_prompt": "Введи оценку за проект"},
-                {"name": "LMS", "type": "grade", "input_prompt": "Введи оценку за экзамен"},
+                {"name": "LMS", "type": "list", "input_prompt": "Введи оценку за экзамен"},
                 {"name": "Экзамен", "type": "grade", "input_prompt": "Введи оценку за экзамен"}
             ],
             "formula": "0.6*Семинары + 0.15*Проект + 0.15*LMS + 0.1*Экзамен"
@@ -55,27 +55,27 @@ FORMULAS = {
         "История России": {
             "semester_1": {
                 "components": [
-                    {"name": "Семинары1", "type": "list", "input_prompt": "Введи оценку за контрольную работу №1"},
-                    {"name": "Семинары2", "type": "grade", "input_prompt": "Введи оценку за экзамен"},
-                    {"name": "LMS", "type": "grade", "input_prompt": "Введи оценку за экзамен"},
+                    {"name": "Семинары_1модуль", "type": "list", "input_prompt": "Введи оценку за контрольную работу №1"},
+                    {"name": "Семинары_2модуль", "type": "list", "input_prompt": "Введи оценку за экзамен"},
+                    {"name": "LMS", "type": "list", "input_prompt": "Введи оценку за экзамен"},
                     {"name": "Экзамен", "type": "grade", "input_prompt": "Введи оценку за экзамен"}   
                 ],
-                "formula": "0.29*Семинары1 + 0.29*Семинары2 + 0.21*LMS + 0.21*Экзамен"
+                "formula": "0.29*Семинары_1модуль + 0.29*Семинары_2модуль + 0.21*LMS + 0.21*Экзамен"
             },
             "semester_2": {
                 "components": [
-                    {"name": "Семинары3", "type": "list", "input_prompt": "Введи оценку за контрольную работу №1"},
-                    {"name": "Семинары4", "type": "grade", "input_prompt": "Введи оценку за экзамен"},
-                    {"name": "LMS", "type": "grade", "input_prompt": "Введи оценку за экзамен"},
+                    {"name": "Семинары_3модуль", "type": "list", "input_prompt": "Введи оценку за контрольную работу №1"},
+                    {"name": "Семинары_4модуль", "type": "list", "input_prompt": "Введи оценку за экзамен"},
+                    {"name": "LMS", "type": "list", "input_prompt": "Введи оценку за экзамен"},
                     {"name": "Проект", "type": "grade", "input_prompt": "Введи оценку за экзамен"},
                     {"name": "Экзамен", "type": "grade", "input_prompt": "Введи оценку за экзамен"}   
                 ],
-                "formula": "0.25*Семинары3 + 0.25*Семинары4 + 0.15*LMS + 0.2*Проект + 0.15*Экзамен"
+                "formula": "0.25*Семинары_3модуль + 0.25*Семинары_4модуль + 0.15*LMS + 0.2*Проект + 0.15*Экзамен"
             }
         },
         "БЖД": {
             "components": [
-                {"name": "Тест1", "type": "list", "input_prompt": "Введи оценку за тест №1"},
+                {"name": "Тест1", "type": "grade", "input_prompt": "Введи оценку за тест №1"},
                 {"name": "Тест2", "type": "grade", "input_prompt": "Введи оценку за тест №2"},
                 {"name": "Тест3", "type": "grade", "input_prompt": "Введи оценку за тест №3"},
                 {"name": "Тест4", "type": "grade", "input_prompt": "Введи оценку за тест №4"},
@@ -85,13 +85,13 @@ FORMULAS = {
         },
         "Цифровая грамотность": {
             "components": [
-                {"name": "Доклад", "type": "list", "input_prompt": "Введи оценку за доклад"},
-                {"name": "Прогон1", "type": "list", "input_prompt": "Введи оценку за первый прогон экзамена"},
-                {"name": "Прогон2", "type": "list", "input_prompt": "Введи оценку за второй прогон экзамена"},
+                {"name": "Доклад", "type": "grade", "input_prompt": "Введи оценку за доклад"},
+                {"name": "Прогон1", "type": "grade", "input_prompt": "Введи оценку за первый прогон экзамена"},
+                {"name": "Прогон2", "type": "grade", "input_prompt": "Введи оценку за второй прогон экзамена"},
                 {"name": "Word", "type": "grade", "input_prompt": "Введи оценку за дз по Word"},
                 {"name": "Excel", "type": "grade", "input_prompt": "Введи оценку за дз по Excel"},
                 {"name": "PowerPoint", "type": "grade", "input_prompt": "Введи оценку за дз по PowerPoint"},
-                {"name": "Посещаемость", "type": "grade", "input_prompt": "Введи количество посещений"}
+                {"name": "Посещаемость", "type": "list", "input_prompt": "Введи количество посещений"}
             ],
             "formula": "0.1*Доклад + 0.1*Прогон1 + 0.1*Прогон2 + 0.2*Word + 0.2*Excel + 0.2*PowerPoint + 0.1*Посещаемость"
         }
@@ -100,8 +100,8 @@ FORMULAS = {
     "2": {
         "Математический анализ": {
             "components": [
-                {"name": "КР1", "type": "list", "input_prompt": "Введи оценку за контрольную работу №1"},
-                {"name": "КР2", "type": "list", "input_prompt": "Введи оценку за контрольную работу №2"},
+                {"name": "КР1", "type": "grade", "input_prompt": "Введи оценку за контрольную работу №1"},
+                {"name": "КР2", "type": "grade", "input_prompt": "Введи оценку за контрольную работу №2"},
                 {"name": "Экзамен", "type": "grade", "input_prompt": "Введи оценку за экзамен"}
             ],
             "formula": "0.3*КР1 + 0.3*КР2 + 0.4*Экзамен"
@@ -116,14 +116,14 @@ FORMULAS = {
         "Дискретная математика": {
             "semester_1":{
                 "components": [
-                    {"name": "КР1", "type": "list", "input_prompt": "Введи оценку за контрольную работу №1"},
+                    {"name": "КР1", "type": "grade", "input_prompt": "Введи оценку за контрольную работу №1"},
                     {"name": "Экзамен", "type": "grade", "input_prompt": "Введи оценку за экзамен"}
                 ],
                 "formula": "1/3*КР2 + 2/3*Экзамен"
             },
             "semester_2":{
                 "components": [
-                    {"name": "КР2", "type": "list", "input_prompt": "Введи оценку за контрольную работу №2"},
+                    {"name": "КР2", "type": "grade", "input_prompt": "Введи оценку за контрольную работу №2"},
                     {"name": "Экзамен", "type": "grade", "input_prompt": "Введи оценку за экзамен"}
                 ],
                 "formula": "1/3*КР1 + 2/3*Экзамен"
@@ -131,12 +131,12 @@ FORMULAS = {
         },
         "Технологии программирования": {
             "components": [
-                {"name": "Интересность", "type": "list", "input_prompt": "Введи оценку за интересность проекта"},
-                {"name": "Реализация", "type": "list", "input_prompt": "Введи оценку за реализацию проекта"},
+                {"name": "Интересность", "type": "grade", "input_prompt": "Введи оценку за интересность проекта"},
+                {"name": "Реализация", "type": "grade", "input_prompt": "Введи оценку за реализацию проекта"},
                 {"name": "ДЗ", "type": "list", "input_prompt": "Введи оценку за домашнее задание"},
                 {"name": "Тест", "type": "grade", "input_prompt": "Введи оценку за тестовый экзамен"},
                 {"name": "Посещаемость", "type": "grade", "input_prompt": "Введи количество посещений"},
-                {"name": "Бонусы", "type": "grade", "input_prompt": "Введи бонусы, если их нет, ставь '0'"}
+                {"name": "Бонусы", "type": "list", "input_prompt": "Введи бонусы, если их нет, ставь '0'"}
             ],
             "formula": "0.2*Интересность + 0.2*Реализация + 0.2*ДЗ + 0.2*Тест + 0.1*Посещаемость + 0.1*Бонусы"
         },
@@ -151,7 +151,7 @@ FORMULAS = {
             "components": [
                 {"name": "Семинары", "type": "list", "input_prompt": "Введи оценку за контрольную работу №1"},
                 {"name": "Проект", "type": "grade", "input_prompt": "Введи оценку за экзамен"},
-                {"name": "LMS", "type": "grade", "input_prompt": "Введи оценку за экзамен"},
+                {"name": "LMS", "type": "list", "input_prompt": "Введи оценку за экзамен"},
                 {"name": "Экзамен", "type": "grade", "input_prompt": "Введи оценку за экзамен"}
             ],
             "formula": "0.6*Семинары + 0.15*Проект + 0.15*LMS + 0.1*Экзамен"
@@ -159,27 +159,27 @@ FORMULAS = {
         "История России": {
             "semester_1": {
                 "components": [
-                    {"name": "Семинары1", "type": "list", "input_prompt": "Введи все оценки за семинары 1 модуля"},
-                    {"name": "Семинары2", "type": "grade", "input_prompt": "Введи все оценки за семинары 2 модуля"},
-                    {"name": "LMS", "type": "grade", "input_prompt": "Введи оценку за работу в SmartLMS"},
+                    {"name": "Семинары_1модуль", "type": "list", "input_prompt": "Введи все оценки за семинары 1 модуля"},
+                    {"name": "Семинары_2модуль", "type": "list", "input_prompt": "Введи все оценки за семинары 2 модуля"},
+                    {"name": "LMS", "type": "list", "input_prompt": "Введи оценку за работу в SmartLMS"},
                     {"name": "Экзамен", "type": "grade", "input_prompt": "Введи оценку за экзамен"}   
                 ],
-                "formula": "0.29*Семинары1 + 0.29*Семинары2 + 0.21*LMS + 0.21*Экзамен"
+                "formula": "0.29*Семинары_1модуль + 0.29*Семинары_2модуль + 0.21*LMS + 0.21*Экзамен"
             },
             "semester_2": {
                 "components": [
-                    {"name": "Семинары3", "type": "list", "input_prompt": "Введи все оценки за семинары 3 модуля"},
-                    {"name": "Семинары4", "type": "grade", "input_prompt": "Введи все оценки за семинары 4 модуля"},
-                    {"name": "LMS", "type": "grade", "input_prompt": "Введи оценку за работу в SmartLMS"},
+                    {"name": "Семинары_3модуль", "type": "list", "input_prompt": "Введи все оценки за семинары 3 модуля"},
+                    {"name": "Семинары_4модуль", "type": "list", "input_prompt": "Введи все оценки за семинары 4 модуля"},
+                    {"name": "LMS", "type": "list", "input_prompt": "Введи оценку за работу в SmartLMS"},
                     {"name": "Проект", "type": "grade", "input_prompt": "Введи оценку за проект"},
                     {"name": "Экзамен", "type": "grade", "input_prompt": "Введи оценку за экзамен"}   
                 ],
-                "formula": "0.25*Семинары3 + 0.25*Семинары4 + 0.15*LMS + 0.2*Проект + 0.15*Экзамен"
+                "formula": "0.25*Семинары_3модуль + 0.25*Семинары_4модуль + 0.15*LMS + 0.2*Проект + 0.15*Экзамен"
             }
         },
         "БЖД": {
             "components": [
-                {"name": "Тест1", "type": "list", "input_prompt": "Введи оценку за тест №1"},
+                {"name": "Тест1", "type": "grade", "input_prompt": "Введи оценку за тест №1"},
                 {"name": "Тест2", "type": "grade", "input_prompt": "Введи оценку за тест №2"},
                 {"name": "Тест3", "type": "grade", "input_prompt": "Введи оценку за тест №3"},
                 {"name": "Тест4", "type": "grade", "input_prompt": "Введи оценку за тест №4"},
@@ -189,13 +189,13 @@ FORMULAS = {
         },
         "Цифровая грамотность": {
             "components": [
-                {"name": "Доклад", "type": "list", "input_prompt": "Введи оценку за доклад"},
-                {"name": "Прогон1", "type": "list", "input_prompt": "Введи оценку за первый прогон экзамена"},
-                {"name": "Прогон2", "type": "list", "input_prompt": "Введи оценку за второй прогон экзамена"},
+                {"name": "Доклад", "type": "grade", "input_prompt": "Введи оценку за доклад"},
+                {"name": "Прогон1", "type": "grade", "input_prompt": "Введи оценку за первый прогон экзамена"},
+                {"name": "Прогон2", "type": "grade", "input_prompt": "Введи оценку за второй прогон экзамена"},
                 {"name": "Word", "type": "grade", "input_prompt": "Введи оценку за дз по Word"},
                 {"name": "Excel", "type": "grade", "input_prompt": "Введи оценку за дз по Excel"},
                 {"name": "PowerPoint", "type": "grade", "input_prompt": "Введи оценку за дз по PowerPoint"},
-                {"name": "Посещаемость", "type": "grade", "input_prompt": "Введи количество посещений"}
+                {"name": "Посещаемость", "type": "list", "input_prompt": "Введи количество посещений"}
             ],
             "formula": "0.1*Доклад + 0.1*Прогон1 + 0.1*Прогон2 + 0.2*Word + 0.2*Excel + 0.2*PowerPoint + 0.1*Посещаемость"
         }
@@ -203,8 +203,8 @@ FORMULAS = {
     "3": {
         "Математический анализ": {
             "components": [
-                {"name": "КР1", "type": "list", "input_prompt": "Введи оценку за контрольную работу №1"},
-                {"name": "КР2", "type": "list", "input_prompt": "Введи оценку за контрольную работу №2"},
+                {"name": "КР1", "type": "grade", "input_prompt": "Введи оценку за контрольную работу №1"},
+                {"name": "КР2", "type": "grade", "input_prompt": "Введи оценку за контрольную работу №2"},
                 {"name": "Экзамен", "type": "grade", "input_prompt": "Введи оценку за экзамен"}
             ],
             "formula": "0.3*КР1 + 0.3*КР2 + 0.4*Экзамен"
@@ -219,19 +219,19 @@ FORMULAS = {
         },
         "Дискретная математика": {
             "components": [
-                {"name": "КР1", "type": "list", "input_prompt": "Введи оценку за контрольную работу №1"},
+                {"name": "КР1", "type": "grade", "input_prompt": "Введи оценку за контрольную работу №1"},
                 {"name": "Экзамен", "type": "grade", "input_prompt": "Введи оценку за экзамен"}
             ],
             "formula": "1/3*КР1 + 2/3*Экзамен"
         },
         "Технологии программирования": {
             "components": [
-                {"name": "Интересность", "type": "list", "input_prompt": "Введи оценку за интересность проекта"},
-                {"name": "Реализация", "type": "list", "input_prompt": "Введи оценку за реализацию проекта"},
+                {"name": "Интересность", "type": "grade", "input_prompt": "Введи оценку за интересность проекта"},
+                {"name": "Реализация", "type": "grade", "input_prompt": "Введи оценку за реализацию проекта"},
                 {"name": "ДЗ", "type": "list", "input_prompt": "Введи оценку за домашнее задание"},
                 {"name": "Тест", "type": "grade", "input_prompt": "Введи оценку за тестовый экзамен"},
-                {"name": "Посещаемость", "type": "grade", "input_prompt": "Введи количество посещений"},
-                {"name": "Бонусы", "type": "grade", "input_prompt": "Введи бонусы, если их нет, ставь '0'"}
+                {"name": "Посещаемость", "type": "list", "input_prompt": "Введи количество посещений"},
+                {"name": "Бонусы", "type": "list", "input_prompt": "Введи бонусы, если их нет, ставь '0'"}
             ],
             "formula": "0.2*Интересность + 0.2*Реализация + 0.2*ДЗ + 0.2*Тест + 0.1*Посещаемость + 0.1*Бонусы"
         },
@@ -246,7 +246,7 @@ FORMULAS = {
             "components": [
                 {"name": "Семинары", "type": "list", "input_prompt": "Введи оценку за контрольную работу №1"},
                 {"name": "Проект", "type": "grade", "input_prompt": "Введи оценку за экзамен"},
-                {"name": "LMS", "type": "grade", "input_prompt": "Введи оценку за экзамен"},
+                {"name": "LMS", "type": "list", "input_prompt": "Введи оценку за экзамен"},
                 {"name": "Экзамен", "type": "grade", "input_prompt": "Введи оценку за экзамен"}
             ],
             "formula": "0.6*Семинары + 0.15*Проект + 0.15*LMS + 0.1*Экзамен"
@@ -254,39 +254,27 @@ FORMULAS = {
         "История России": {
             "semester_1": {
                 "components": [
-                    {"name": "Семинары1", "type": "list", "input_prompt": "Введи все оценки за семинары 1 модуля"},
-                    {"name": "Семинары2", "type": "grade", "input_prompt": "Введи все оценки за семинары 2 модуля"},
-                    {"name": "LMS", "type": "grade", "input_prompt": "Введи оценку за работу в SmartLMS"},
+                    {"name": "Семинары_1модуль", "type": "list", "input_prompt": "Введи все оценки за семинары 1 модуля"},
+                    {"name": "Семинары_2модуль", "type": "list", "input_prompt": "Введи все оценки за семинары 2 модуля"},
+                    {"name": "LMS", "type": "list", "input_prompt": "Введи оценку за работу в SmartLMS"},
                     {"name": "Экзамен", "type": "grade", "input_prompt": "Введи оценку за экзамен"}   
                 ],
-                "formula": "0.29*Семинары1 + 0.29*Семинары2 + 0.21*LMS + 0.21*Экзамен"
+                "formula": "0.29*Семинары_1модуль + 0.29*Семинары_2модуль + 0.21*LMS + 0.21*Экзамен"
             },
             "semester_2": {
                 "components": [
-                    {"name": "Семинары3", "type": "list", "input_prompt": "Введи все оценки за семинары 3 модуля"},
-                    {"name": "Семинары4", "type": "grade", "input_prompt": "Введи все оценки за семинары 4 модуля"},
-                    {"name": "LMS", "type": "grade", "input_prompt": "Введи оценку за работу в SmartLMS"},
+                    {"name": "Семинары_3модуль", "type": "list", "input_prompt": "Введи все оценки за семинары 3 модуля"},
+                    {"name": "Семинары_4модуль", "type": "list", "input_prompt": "Введи все оценки за семинары 4 модуля"},
+                    {"name": "LMS", "type": "list", "input_prompt": "Введи оценку за работу в SmartLMS"},
                     {"name": "Проект", "type": "grade", "input_prompt": "Введи оценку за проект"},
                     {"name": "Экзамен", "type": "grade", "input_prompt": "Введи оценку за экзамен"}   
                 ],
-                "formula": "0.25*Семинары3 + 0.25*Семинары4 + 0.15*LMS + 0.2*Проект + 0.15*Экзамен"
+                "formula": "0.25*Семинары_3модуль + 0.25*Семинары_4модуль + 0.15*LMS + 0.2*Проект + 0.15*Экзамен"
             }
-        },
-        "Цифровая грамотность": {
-            "components": [
-                {"name": "Доклад", "type": "list", "input_prompt": "Введи оценку за доклад"},
-                {"name": "первый прогон экзамена", "type": "list", "input_prompt": "Введи оценку за первый прогон экзамена"},
-                {"name": "второй прогон экзамена", "type": "list", "input_prompt": "Введи оценку за второй прогон экзамена"},
-                {"name": "Word", "type": "grade", "input_prompt": "Введи оценку за дз по Word"},
-                {"name": "Excel", "type": "grade", "input_prompt": "Введи оценку за дз по Excel"},
-                {"name": "PowerPoint ", "type": "grade", "input_prompt": "Введи оценку за дз по PowerPoint"},
-                {"name": "Посещаемость", "type": "grade", "input_prompt": "Введи количество посещений"}
-            ],
-            "formula": "0.1*Доклад + 0.1*первый прогон экзамена + 0.1*второй прогон экзамена + 0.2*Word + 0.2*Excel + 0.2*PowerPoint + 0.1*Посещаемость"
         },
         "БЖД": {
             "components": [
-                {"name": "Тест1", "type": "list", "input_prompt": "Введи оценку за тест №1"},
+                {"name": "Тест1", "type": "grade", "input_prompt": "Введи оценку за тест №1"},
                 {"name": "Тест2", "type": "grade", "input_prompt": "Введи оценку за тест №2"},
                 {"name": "Тест3", "type": "grade", "input_prompt": "Введи оценку за тест №3"},
                 {"name": "Тест4", "type": "grade", "input_prompt": "Введи оценку за тест №4"},
@@ -296,9 +284,9 @@ FORMULAS = {
         },
         "Цифровая грамотность": {
             "components": [
-                {"name": "Доклад", "type": "list", "input_prompt": "Введи оценку за доклад"},
-                {"name": "Прогон1", "type": "list", "input_prompt": "Введи оценку за первый прогон экзамена"},
-                {"name": "Прогон2", "type": "list", "input_prompt": "Введи оценку за второй прогон экзамена"},
+                {"name": "Доклад", "type": "grade", "input_prompt": "Введи оценку за доклад"},
+                {"name": "Прогон1", "type": "grade", "input_prompt": "Введи оценку за первый прогон экзамена"},
+                {"name": "Прогон2", "type": "grade", "input_prompt": "Введи оценку за второй прогон экзамена"},
                 {"name": "Word", "type": "grade", "input_prompt": "Введи оценку за дз по Word"},
                 {"name": "Excel", "type": "grade", "input_prompt": "Введи оценку за дз по Excel"},
                 {"name": "PowerPoint", "type": "grade", "input_prompt": "Введи оценку за дз по PowerPoint"},
